@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       post 'auth/login', to: 'auth#login'
+      post 'auth/signup', to: 'auth#signup'
       #resources :users
       #resources :companies
       #resources :service_orders

@@ -26,4 +26,28 @@ RSpec.describe "Api::V1::Auths", type: :request do
       expect(parsed_body).to include("token")
     end
   end
+
+  describe "POST /signup", focus: true do
+    it "missing params" do
+      post "/api/v1/auth/signup"
+      expect(response).to have_http_status(:bad_request)
+    end
+
+    it "password too short" do
+      post "/api/v1/auth/signup", params: { email: "teste@gmail.com", password: "12345", name: "Teste" }
+      expect(response).to have_http_status(:bad_request)
+    end
+
+    it "user already exists" do
+      user = create(:user)
+      post "/api/v1/auth/signup", params: { email: user.email, password: user.password, name: user.name }
+      expect(response).to have_http_status(:bad_request)
+    end
+
+    it "valid user" do
+      user = create(:user)
+      post "/api/v1/auth/signup", params: { email: "teste@c.com", password: user.name, name: user.name }
+      expect(response).to have_http_status(:ok)
+    end
+  end
 end

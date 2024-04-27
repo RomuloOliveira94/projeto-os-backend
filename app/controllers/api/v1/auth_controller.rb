@@ -19,4 +19,26 @@ class Api::V1::AuthController < ApplicationController
       render status: :unauthorized
     end
   end
+
+  def signup
+    if params[:email].nil? || params[:password].nil? || params[:name].nil?
+      render status: :bad_request, json: { error: "Missing params" }
+      return
+    end
+
+    if params[:password].length < 6
+      render status: :bad_request, json: { error: "Password too short" }
+      return
+    end
+
+    @user = User.find_by(email: params[:email])
+
+    if @user
+      render status: :bad_request, json: { error: "User already exists" }
+      return
+    end
+
+    @new_user = User.new(email: params[:email], password: params[:password], name: params[:name])
+    render status: :ok
+  end
 end
