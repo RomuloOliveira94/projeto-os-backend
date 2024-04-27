@@ -1,12 +1,12 @@
 class Api::V1::AuthController < ApplicationController
   def login
     if params[:email].nil? || params[:password].nil?
-      render status: :bad_request
+      render status: :bad_request, json: { error: "Missing params" }
       return
     end
 
     unless @user = User.find_by(email: params[:email])
-      render status: :not_found
+      render status: :not_found, json: { error: "Error to login" }
       return
     end
 
@@ -16,7 +16,7 @@ class Api::V1::AuthController < ApplicationController
       render json: { token: token, "exp": Time.now + 72.hours.to_int, "username": @user.name }, status: :ok
       return
     else
-      render status: :unauthorized
+      render status: :unauthorized, json: { error: "Error to login" }
     end
   end
 
@@ -39,6 +39,12 @@ class Api::V1::AuthController < ApplicationController
     end
 
     @new_user = User.new(email: params[:email], password: params[:password], name: params[:name])
+
+    unless @new_user.save
+      render status: :bad_request, json: { error: "Error to create user" }
+      return
+    end
+
     render status: :ok
   end
 end

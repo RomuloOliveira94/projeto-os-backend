@@ -44,6 +44,11 @@ RSpec.describe "Api::V1::Auths", type: :request do
       expect(response).to have_http_status(:bad_request)
     end
 
+    it "error to create user" do
+      post "/api/v1/auth/signup", params: { email: "teste", password: "teste1", name: "Teste" }
+      expect(response).to have_http_status(:bad_request)
+    end
+
     it "valid user" do
       user = create(:user)
       post "/api/v1/auth/signup", params: { email: "teste@c.com", password: user.name, name: user.name }
