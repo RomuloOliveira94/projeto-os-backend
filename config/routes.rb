@@ -9,7 +9,8 @@ Rails.application.routes.draw do
   # root "posts#index"
   namespace :api do
     namespace :v1 do
-      resources :users
+      post 'auth/login', to: 'auth#login'
+      #resources :users
       #resources :companies
       #resources :service_orders
       #resources :budgets
