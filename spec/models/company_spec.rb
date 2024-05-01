@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Company, type: :model, focus: true do
+RSpec.describe Company, type: :model do
   let(:company) { build(:company) }
 
   it "should create a valid company" do
