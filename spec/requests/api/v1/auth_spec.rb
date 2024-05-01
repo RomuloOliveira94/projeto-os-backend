@@ -27,7 +27,7 @@ RSpec.describe "Api::V1::Auths", type: :request do
     end
   end
 
-  describe "POST /signup", focus: true do
+  describe "POST /signup" do
     it "missing params" do
       post "/api/v1/auth/signup"
       expect(response).to have_http_status(:bad_request)
