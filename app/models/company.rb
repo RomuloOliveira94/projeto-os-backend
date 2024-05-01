@@ -14,6 +14,7 @@ class Company < ApplicationRecord
   validates :zip_code, presence: true
   validates :status, presence: true
   validates :business, presence: true
+  validates :user_id, presence: true 
 
   def payment_methods_enum
     %w[pix credit_card debit_card cash boleto]

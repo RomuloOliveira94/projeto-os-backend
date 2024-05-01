@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Api::V1::Companies", type: :request, focus: true do
+RSpec.describe "Api::V1::Companies", type: :request do
   before(:each) do
     @user = create(:user)
     @token = JWT.encode({ user_id: @user.id }, Rails.application.credentials.secret_key_base)

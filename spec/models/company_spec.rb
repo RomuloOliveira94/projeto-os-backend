@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe Company, type: :model do
+RSpec.describe Company, type: :model, focus: true do
   let(:company) { build(:company) }
 
   it "should create a valid company" do
     expect(company).to be_valid
   end
 
-  [:name, :cnpj, :address, :neighborhood, :phone, :email, :state, :city, :zip_code, :status, :business].each do |attribute|
+  [:name, :cnpj, :address, :neighborhood, :phone, :email, :state, :city, :zip_code, :status, :business, :user_id].each do |attribute|
     it "should not create a company without a #{attribute}" do
       company[attribute] = nil
       expect(company).to_not be_valid
