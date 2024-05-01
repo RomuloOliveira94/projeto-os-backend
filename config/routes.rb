@@ -12,7 +12,12 @@ Rails.application.routes.draw do
       post 'auth/login', to: 'auth#login'
       post 'auth/signup', to: 'auth#signup'
       #resources :users
-      resources :companies
+      resources :companies do
+        collection do
+          get 'search'
+          get 'my_company'
+        end
+      end
       #resources :service_orders
       #resources :budgets
       #resources :customers

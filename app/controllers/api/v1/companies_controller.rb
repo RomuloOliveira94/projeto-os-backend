@@ -17,6 +17,22 @@ class Api::V1::CompaniesController < ApplicationController
     render status: :ok, json: @company
   end
 
+  def search
+    @companies = Company.where("name LIKE ?", "%#{params[:name]}%")
+    render status: :ok, json: @companies
+  end
+
+  def my_company
+    @company = Company.find_by(user_id: @current_user.id)
+
+    if @company.nil?
+      render status: :not_found, json: { error: "Company not found" }
+      return
+    end
+
+    render status: :ok, json: @company
+  end
+
   def create
     @company = Company.new(company_params)
 
@@ -40,6 +56,18 @@ class Api::V1::CompaniesController < ApplicationController
     else
       render status: :unprocessable_entity, json: { errors: @company.errors }
     end
+  end
+
+  def destroy
+    @company = Company.find(params[:id])
+
+    if @company.nil?
+      render status: :not_found, json: { error: "Company not found" }
+      return
+    end
+
+    @company.destroy
+    render status: :ok, json: { message: "Company deleted" }
   end
 
   private
