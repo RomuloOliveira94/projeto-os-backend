@@ -10,9 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_01_234433) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_01_234615) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "budgets", force: :cascade do |t|
+    t.bigint "company_id", null: false
+    t.string "customer_name"
+    t.string "customer_phone"
+    t.jsonb "services"
+    t.jsonb "products"
+    t.jsonb "other_fees"
+    t.jsonb "materials"
+    t.text "observations"
+    t.float "subtotal"
+    t.float "discount"
+    t.float "total"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_budgets_on_company_id"
+  end
 
   create_table "companies", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -82,6 +99,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_01_234433) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "budgets", "companies"
   add_foreign_key "companies", "users"
   add_foreign_key "customers", "companies"
   add_foreign_key "service_orders", "companies"
