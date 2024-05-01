@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_01_022302) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_01_234433) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -36,6 +36,43 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_01_022302) do
     t.index ["user_id"], name: "index_companies_on_user_id"
   end
 
+  create_table "customers", force: :cascade do |t|
+    t.bigint "company_id", null: false
+    t.string "name"
+    t.string "cpf_cnpj"
+    t.string "email"
+    t.string "phone"
+    t.string "address"
+    t.string "address_number"
+    t.string "address_complement"
+    t.string "neighborhood"
+    t.string "city"
+    t.string "state"
+    t.string "zip_code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_customers_on_company_id"
+  end
+
+  create_table "service_orders", force: :cascade do |t|
+    t.bigint "company_id", null: false
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.jsonb "products"
+    t.jsonb "services"
+    t.jsonb "other_fees"
+    t.jsonb "materials"
+    t.text "observations"
+    t.float "subtotal"
+    t.float "discount"
+    t.float "total"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "customer_id", null: false
+    t.index ["company_id"], name: "index_service_orders_on_company_id"
+    t.index ["customer_id"], name: "index_service_orders_on_customer_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -46,4 +83,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_01_022302) do
   end
 
   add_foreign_key "companies", "users"
+  add_foreign_key "customers", "companies"
+  add_foreign_key "service_orders", "companies"
+  add_foreign_key "service_orders", "customers"
 end
