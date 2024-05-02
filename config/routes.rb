@@ -18,9 +18,9 @@ Rails.application.routes.draw do
           get 'my_company'
         end
       end
-      #resources :service_orders
-      #resources :budgets
-      #resources :customers
+      resources :service_orders
+      resources :budgets
+      resources :customers
     end
   end
 end
