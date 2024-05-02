@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Customer, type: :model, focus: true do
+RSpec.describe Customer, type: :model do
   it "is valid with name and phone" do
     company = create(:company)
     customer = create(:customer, company_id: company.id)
@@ -19,5 +19,11 @@ RSpec.describe Customer, type: :model, focus: true do
     customer = build(:customer, phone: nil, company_id: company.id)
     customer.valid?
     expect(customer.errors[:phone]).to include("can't be blank")
+  end
+
+  it "is invalid without company" do
+    customer = build(:customer)
+    customer.valid?
+    expect(customer.errors[:company]).to include("must exist")
   end
 end
