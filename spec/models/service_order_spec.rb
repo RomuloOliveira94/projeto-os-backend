@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ServiceOrder, type: :model, focus: true do
+RSpec.describe ServiceOrder, type: :model do
   it "shoud create a valid service order" do
     company = create(:company)
     customer = create(:customer, company_id: company.id)
