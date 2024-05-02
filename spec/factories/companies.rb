@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :company do
+    id {Faker::Number.number(digits: 5)}
     user {create(:user)}
     name {Faker::Company.name}
     cnpj {Faker::Company.brazilian_company_number}

@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :customer do
+    id {Faker::Number.number(digits: 5)}
     name {Faker::Name.name}
     phone {Faker::PhoneNumber.cell_phone}
     email {Faker::Internet.email}

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Api::V1::Customers", type: :request, focus: true do
+RSpec.describe "Api::V1::Customers", type: :request do
   before(:each) do
     @user = create(:user)
     @company = create(:company, user: @user)
